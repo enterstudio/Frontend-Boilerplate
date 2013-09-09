@@ -1,0 +1,16 @@
+.DS_Store
+
+# sass
+.sass-cache
+node_modules
+
+# node
+/node_modules
+
+# laravel
+
+# app
+
+# public
+/public/_css
+/public/_js
