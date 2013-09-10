@@ -12,7 +12,8 @@
 // Settings and mixins
 @import "defaults/fonts";
 @import "defaults/variables";
-@import "defaults/mixins";
+@import "defaults/helpers"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
+@import "defaults/mixins"; // Stylistic mixins (buttons, arrows etc)
 
 // Grid - CSS Wizardry grids
 @import "defaults/grid";
