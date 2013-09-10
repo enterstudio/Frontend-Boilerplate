@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 
 		// Watch command
 		watch: {
-			files: ['<%= jshint.files %>', 'build/scss/src/*.scss', 'build/scss/src/defaults/*.scss', 'build/scss/src/partials/*.scss'],
+			files: ['<%= jshint.files %>', 'build/scss/*.scss', 'build/scss/defaults/*.scss', 'build/scss/partials/*.scss'],
 			tasks: ['dev']
 		}
 	});
@@ -73,8 +73,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 
 	// Set 2 basic tasks:
-	// 	- dev for development (no cleaning of directories and uncompressed CSS and JS)
-	// 	- default for production (cleans directories first and replaces with compressed CSS and JS)
+	// - dev for development (no cleaning of directories and uncompressed CSS and JS)
+	// - default for production (cleans directories first and replaces with compressed CSS and JS)
 	grunt.registerTask('dev', ['jshint', 'concat', 'compass:dev']);
 	grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify', 'compass:dist']);
 
