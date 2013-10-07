@@ -81,6 +81,14 @@ $fix-mqs: false !default;
 	}
 }
 
+@mixin hidpi-query() {
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+	only screen and (-o-min-device-pixel-ratio: 13/10),
+	only screen and (min-resolution: 120dpi) {
+		@content;
+	}
+}
+
 $old-ie: false !default;
 
 // Custom breakpoint mixin, can pass a full media query rule here to output if needed
@@ -121,4 +129,35 @@ $old-ie: false !default;
   // Output the property's px and rem values
   #{$property}: $px-values;
   #{$property}: $rem-values;
+}
+
+// BACKGROUND IMAGE MIXIN
+// takes in up to 2 images and a sprite boolean
+// returns markup to put an image as the background of an element with fixed size
+@mixin bg-image($img, $img-2x:false, $sprite:false) {
+
+	width:image-width($img);
+
+	@if $sprite {
+		height:image-height($img)/2;
+	} @else {
+		height:image-height($img);
+	}
+
+	background:image-url($img) no-repeat 0 0;
+
+	@if $img-2x {
+		@include hidpi-query() {
+			width:image-width($img-2x)/2;
+
+			@if $sprite {
+				height:image-height($img-2x)/4;
+			} @else {
+				height:image-height($img-2x)/2;
+			}
+
+			background:image-url($img-2x) no-repeat 0 0;
+			background-size:(image-width($img-2x)/2) (image-height($img-2x)/2);
+		}
+	}
 }
