@@ -12,5 +12,8 @@ composer.phar
 composer.lock
 /vendor
 
+# laravel
+/bootstrap/compiled.php
+
 # public
 /public/_*/
