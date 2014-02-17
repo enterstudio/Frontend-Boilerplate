@@ -22,6 +22,7 @@ node_modules
 # Hide generated files
 /public/_*
 /public/var/*
+/public/packages/*
 
 # Testing
 /report
