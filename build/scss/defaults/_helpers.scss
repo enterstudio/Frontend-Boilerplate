@@ -1,10 +1,8 @@
-// =============================================================================
-// Sass mixins for breakpoints as well as clearfix and hide-text mixins
-// =============================================================================
+// MIXINS
+// ===================================================================================
 
 // HIDDEN CLASSES
 // -------------------------------------------------------
-
 %hide-text {
 	display:block;
 	text-indent:100%;
@@ -22,25 +20,6 @@
 	}
 	&:after {
 		clear: both;
-	}
-}
-
-// used for screenreaders
-%visually-hidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
-
-%hide-mobile {
-	display: none;
-	@include breakpoint(medium) {
-		display: block;
 	}
 }
 
@@ -155,7 +134,6 @@ $old-ie: false !default;
 // BACKGROUND IMAGE MIXIN
 // takes in up to 2 images and a sprite boolean
 // returns markup to put an image as the background of an element with fixed size
-// TODO: remove or adjust for general purpose
 @mixin bg-image($img, $img-2x:false, $sprite:false) {
 
 	width:image-width($img);

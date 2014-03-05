@@ -1,25 +1,5 @@
-// =============================================================================
-// Stylistic mixins (buttons, arrows etc)
-// =============================================================================
-
-//constant half spacing between blocks for mobile view
-@mixin responsive-margin($spacing, $direction:bottom) {
-	margin-#{$direction}: $spacing / 2;
-	@include breakpoint(medium) {
-		margin-#{$direction}: $spacing;
-	}
-}
-
-//absolutely centre an element
-@mixin centered-button($button-size) {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: $button-size;
-	height: $button-size;
-	margin-top: - ($button-size / 2);
-	margin-left: - ($button-size / 2);
-}
+// STYLE MIXINS
+// -------------------------------------------------------
 
 // BUTTONS
 @mixin button($grad-start, $grad-end) {
