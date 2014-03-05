@@ -1,0 +1,11 @@
+// =============================================================================
+// Define Site Spacing (for keeping margins/padding consistent)
+// =============================================================================
+
+$spacing: 20px;
+$spacing-double: $spacing * 2;
+$spacing-half: $spacing / 2;
+$spacing-quarter: $spacing / 4;
+
+// $Gutter to be used for custom grid systems
+$gutter: $spacing-half;

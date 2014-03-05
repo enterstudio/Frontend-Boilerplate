@@ -2,15 +2,15 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		// Clean build directories
+		// Clean public directories
 		clean: {
 			src: ["public/_css", "public/_js"]
 		},
 		// JS linting
 		jshint: {
-			// 'build/js/lib/*.js',
+			// 'app/js/lib/*.js',
 			// Only JSHint custom source files, libraries can be hinted too if required
-			files: ['gruntfile.js', 'build/js/src/*.js'],
+			files: ['gruntfile.js', 'app/js/src/*.js'],
 			options: {
 				// options here to override JSHint defaults
 				globals: {
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 			options: {
 			},
 			dist: {
-				src: ['build/js/lib/*.js', 'build/js/src/*.js'],
+				src: ['app/js/lib/*.js', 'app/js/src/*.js'],
 				dest: 'public/_js/<%= pkg.name %>.js'
 			}
 		},
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 
 		// Watch command
 		watch: {
-			files: ['<%= jshint.files %>', 'build/scss/*.scss', 'build/scss/defaults/*.scss', 'build/scss/partials/*.scss'],
+			files: ['<%= jshint.files %>', 'app/scss/*.scss', 'app/scss/defaults/*.scss', 'app/scss/partials/*.scss'],
 			tasks: ['dev']
 		}
 	});

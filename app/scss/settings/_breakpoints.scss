@@ -1,0 +1,16 @@
+// =============================================================================
+// Define BREAKPOINTS / doubles as container sizes
+// =============================================================================
+
+// Variables for use with breakpoints and max-width in layout
+$width-small: 20em; // 320px - Mobile
+$width-medium: 35em; // 560px - Tablet
+$width-large: 60em; // 960px - Desktop Small
+$width-xlarge: 75em; // 1200px - Desktop Large
+
+$breakpoints: (
+	'small' $width-small,
+	'medium' $width-medium,
+	'large' $width-large,
+	'xlarge' $width-xlarge
+);

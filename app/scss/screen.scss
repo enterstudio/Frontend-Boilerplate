@@ -1,0 +1,38 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+// COMPASS
+@import "compass/css3";
+
+// SETTINGS
+@import "settings/variables";
+
+// TOOLS
+@import "tools/retina";
+@import "tools/grid";
+@import "tools/pie";
+@import "tools/mixins";
+@import "tools/helpers";
+
+// BASE
+@import "defaults/normalize";
+@import "defaults/fonts";
+@import "defaults/base";
+
+// GLOBALS
+@import "globals/layout";
+@import "globals/header";
+@import "globals/nav";
+@import "globals/content";
+@import "globals/footer";
+
+// OBJECTS (e.g. media blocks - common design objects)
+@import "modules/media";
+
+// COMPONENTS (Site partials, specific object styles)
+
+
+//UI Specific
+// Include any overrides here
