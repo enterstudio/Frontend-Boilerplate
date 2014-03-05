@@ -2,8 +2,8 @@
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "app/_css"
-sass_dir = "app/scss"
+css_dir = "public/_css"
+sass_dir = "build/scss"
 images_dir = "public/img"
 javascripts_dir = "public/_js"
 
@@ -26,6 +26,3 @@ output_style = (environment == :production) ? :compressed : :expanded
 # preferred_syntax = :sass
 # and then run:
 # sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass
-
-# retina images
-require File.join(File.dirname(__FILE__), 'build', 'scss', 'compass', 'retina_helpers.rb')
