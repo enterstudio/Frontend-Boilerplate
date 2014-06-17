@@ -3,9 +3,13 @@
 # Set this to the root of your project when deployed:
 http_path = "/"
 css_dir = "public/_css"
-sass_dir = "build/scss"
+sass_dir = "app/scss"
 images_dir = "public/img"
-javascripts_dir = "public/_js"
+fonts_dir = "public/fonts"
+fonts_path = "public/fonts"
+
+http_fonts_path = "/fonts"
+http_fonts_dir = "/fonts"
 
 http_generated_images_path = "/img"
 http_images_path = "/img"
@@ -18,8 +22,7 @@ output_style = (environment == :production) ? :compressed : :expanded
 # relative_assets = true
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
-# line_comments = false
-
+line_comments = false
 
 # If you prefer the indented syntax, you might want to regenerate this
 # project again passing --syntax sass, or you can uncomment this:
