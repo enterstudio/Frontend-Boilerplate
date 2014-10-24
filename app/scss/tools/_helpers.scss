@@ -23,6 +23,25 @@
 	}
 }
 
+%hide-mobile {
+	display: none;
+	@include breakpoint(medium) {
+		display: block;
+	}
+}
+
+//used for screenreaders
+%visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
 // Search a list of lists ($haystack) for value ($needle) at the first position.
 // Returns that item in the list, or false if not found.
 // Based on breakup-list-key-search mixin by @BPScott - (https://github.com/bpscott/breakup)

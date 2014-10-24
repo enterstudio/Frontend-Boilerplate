@@ -1,0 +1,106 @@
+// STYLE MIXINS
+// -------------------------------------------------------
+
+// BUTTONS
+@mixin button($grad-start, $grad-end) {
+	display:inline-block;
+	padding:8px 20px;
+	color:$text-white;
+	line-height:1;
+	text-align:center;
+	text-shadow:2px 1px 3px rgba(0,0,0,0.7);
+	@include background-image(linear-gradient($grad-start, $grad-end));
+	border:1px solid lighten($grad-start, 30%);
+	@include border-radius(4px);
+
+	&:hover {
+		// Need some sort of hover style?!
+		color:#fff;
+	}
+
+	&:active {
+		position:relative;
+		top:1px;
+		@include background-image(linear-gradient($grad-end, $grad-start));
+	}
+}
+
+// =============================================================================
+//  Responsive Spacing
+// =============================================================================
+
+//constant half spacing between blocks for mobile view
+@mixin rmargin($spacing, $direction:bottom) {
+	margin-#{$direction}: round($spacing / 2);
+	@include breakpoint(medium) {
+		margin-#{$direction}: $spacing;
+	}
+}
+@mixin rpadding($spacing, $direction:all) {
+	@if ($direction == all) {
+		padding: $spacing / 2;
+		@include breakpoint(medium) {
+			padding: $spacing;
+		}
+	}
+	@else {
+		padding-#{$direction}: $spacing / 2;
+		@include breakpoint(medium) {
+			padding-#{$direction}: $spacing;
+		}
+	}
+}
+@mixin rspacing($spacing, $direction:bottom, $type:margin) {
+	@if ($direction == all) {
+		#{$type}: $spacing / 2;
+		@include breakpoint(medium) {
+			#{$type}: $spacing;
+		}
+	}
+	@else {
+		#{$type}-#{$direction}: $spacing / 2;
+		@include breakpoint(medium) {
+			#{$type}-#{$direction}: $spacing;
+		}
+	}
+}
+
+
+// =============================================================================
+//  Arrows
+// =============================================================================
+
+@mixin arrow($direction: 'down', $color: #FFF, $size: 5px) {
+	display: inline-block;
+	height: 0;
+	width: 0;
+	@if $direction == 'up' {
+		border-left: $size solid transparent;
+		border-right: $size solid transparent;
+		border-bottom: $size solid $color;
+	} @else if $direction == 'right' {
+		border-top: $size solid transparent;
+		border-bottom: $size solid transparent;
+		border-left: $size solid $color;
+	} @else if $direction == 'down' {
+		border-top: $size solid $color;
+		border-right: $size solid transparent;
+		border-left: $size solid transparent;
+	} @else if $direction == 'left' {
+		border-top: $size solid transparent;
+		border-right: $size solid $color;
+		border-bottom: $size solid transparent;
+	} @else if $direction == 'up-left' {
+		border-top: $size solid $color;
+		border-right: $size solid transparent;
+	} @else if $direction == 'up-right' {
+		border-top: $size solid $color;
+		border-left: $size solid transparent;
+	} @else if $direction == 'down-left' {
+		border-bottom: $size solid $color;
+		border-right: $size solid transparent;
+	} @else if $direction == 'down-right' {
+		border-bottom: $size solid $color;
+		border-left: $size solid transparent;
+	}
+}

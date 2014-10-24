@@ -6,23 +6,31 @@
 // Compass partials
 @import "compass/css3";
 
-// Normalize
-@import "defaults/normalize";
+// Settings
+@import "settings/breakpoints";
+@import "settings/colours";
+@import "settings/fonts";
+@import "settings/spacing";
 
-// Settings and mixins
-@import "defaults/fonts";
-@import "defaults/variables";
-@import "defaults/helpers"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
-@import "defaults/mixins"; // Stylistic mixins (buttons, arrows etc)
-
-// Grid - CSS Wizardry grids
-@import "defaults/grid";
+// Modules
+@import "modules/element-mixins";
+@import "modules/grid"; // CSS Wizardry Grids
+@import "modules/helpers";
+@import "modules/transitions";
 
 // Site specific files go here
 
-// layout (apply grids to the site classes)
-// base (typography)
+// base - base styles, import fonts/icon-fonts, layout (apply grids to the site classes)
+@import "partials/base/normalize";
+@import "partials/base/fonts";
+@import "partials/base/layout";
 
-// header, footer, and other common areas
+// global - header, footer, and other common areas
+@import "partials/global/header";
+@import "partials/global/nav";
+@import "partials/global/footer";
+
+// components - buttons (!!), tables, forms
+@import "partials/components/buttons";
 
 // page specifics
