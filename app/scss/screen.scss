@@ -13,10 +13,10 @@
 @import "settings/spacing";
 
 // Modules
-@import "modules/element-mixins";
-@import "modules/grid"; // CSS Wizardry Grids
-@import "modules/helpers";
-@import "modules/transitions";
+@import "tools/element-mixins";
+@import "tools/helpers";
+@import "tools/grid"; // CSS Wizardry Grids
+@import "tools/transitions";
 
 // Site specific files go here
 
