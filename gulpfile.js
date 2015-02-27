@@ -26,33 +26,34 @@ gulp.task('browser-sync', function() {
 // Styles Task
 gulp.task('styles', function () {
   return gulp.src(paths.scss)
-    .pipe($.plumber())
-    .pipe($.sass({ style: 'expanded', }))
-	.pipe($.autoprefixer('last 2 version'))
-	.pipe(gulp.dest('public/_css'))
-    .pipe($.rename({ suffix: '.min' }))
-	.pipe($.minifyCss())
-    .pipe(gulp.dest('public/_css'))
-    .pipe($.size({title: 'Styles'}));
+    .pipe( $.plumber() )
+    .pipe( $.sass({ style: 'expanded', }) )
+	.pipe( $.autoprefixer('last 2 version') )
+	.pipe( gulp.dest('public/_css') )
+    .pipe( $.rename({ suffix: '.min' }) )
+	.pipe( $.minifyCss() )
+    .pipe( gulp.dest('public/_css') )
+    .pipe( $.size({title: 'Styles'})) ;
 });
 
 // Scripts Task
 gulp.task('scripts',function(){
   gulp.src(paths.js)
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('default'))
-    .pipe($.concat('scripts.js'))
-    .pipe(gulp.dest('public/_js'))
-    .pipe($.uglify())
-    .pipe($.rename({ suffix: '.min' }))
-    .pipe(gulp.dest('public/_js'))
-    .pipe($.size({title: 'Scripts'}));
+    .pipe( $.jshint() )
+    .pipe( $.jshint.reporter('default') )
+    .pipe( $.concat('scripts.js') )
+    .pipe( gulp.dest('public/_js') )
+    .pipe( $.stripDebug() )
+    .pipe( $.uglify() )
+    .pipe( $.rename({ suffix: '.min' }) )
+    .pipe( gulp.dest('public/_js') )
+    .pipe( $.size({title: 'Scripts'})) ;
 });
 
 // Sass Linting
 gulp.task('lint', function() {
   return gulp.src(paths.scss)
-    .pipe($.scssLint({
+    .pipe( $.scssLint( {
         // 'bundleExec': true,
         'config': '.scss-lint.yml',
         'reporterOutput': 'scss-lint-report.xml'
@@ -62,7 +63,7 @@ gulp.task('lint', function() {
 // // Bower
 // gulp.task('bower', function() {
 //   return $.bower()
-//   .pipe(gulp.dest('public/_components'))
+//   .pipe( gulp.dest('public/_components') )
 // });
 
 // Manual Dev task - speedy
