@@ -4,28 +4,28 @@
  */
 
 // Variables
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var pngquant = require('imagemin-pngquant');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
+var $ = require('gulp-load-plugins')(),
+	gulp = require('gulp'),
+	del = require('del'),
+	pngquant = require('imagemin-pngquant'),
+	browserSync = require('browser-sync'),
+	reload = browserSync.reload,
 
-var paths = {
-	scss: 'assets/scss/*.scss',
-	js: 'assets/js/*.js',
-	img: 'assets/img/*'
-};
+	paths = {
+		scss: 'assets/scss/*.scss',
+		js: 'assets/js/*.js',
+		img: 'assets/img/*'
+	},
 
-var onError = function(err) {
-	notify.onError({
-		title: "Gulp",
-		subtitle: "Failure!",
-		message: "Error: <%= error.message %>",
-		sound: "Beep"
-	})(err);
-	this.emit('end');
-};
+	onError = function(err) {
+		notify.onError({
+			title: "Gulp",
+			subtitle: "Failure!",
+			message: "Error: <%= error.message %>",
+			sound: "Beep"
+		})(err);
+		this.emit('end');
+	};
 
 // Browser Sync
 gulp.task('browser-sync', function() {
@@ -83,12 +83,6 @@ gulp.task('imgmin', function () {
 		.pipe(gulp.dest('public/img'));
 });
 
-// // Bower
-// gulp.task('bower', function() {
-//	 return $.bower()
-//	 .pipe( gulp.dest('public/_components') )
-// });
-
 // Manual Dev task - speedy
 gulp.task('dev', function() {
 	gulp.start('scripts', 'styles');
@@ -100,7 +94,6 @@ gulp.task('clean', function() {
 });
 
 // Manual Default task - does everything
-// add 'Bower' if needed
 gulp.task('default', ['clean'], function() {
 	gulp.start('styles', 'scripts', 'imgmin');
 });
