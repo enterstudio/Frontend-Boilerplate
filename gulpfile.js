@@ -7,6 +7,7 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
+var pngquant = require('imagemin-pngquant');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
@@ -74,10 +75,10 @@ gulp.task('scripts',function(){
 
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
-		.pipe(imagemin({
+		.pipe($.imagemin({
 			progressive: true,
 			svgoPlugins: [{removeViewBox: false}],
-			use: [pngquant()]
+			use: [ pngquant() ]
 		}))
 		.pipe(gulp.dest('public/img'));
 });
@@ -101,7 +102,7 @@ gulp.task('clean', function() {
 // Manual Default task - does everything
 // add 'Bower' if needed
 gulp.task('default', ['clean'], function() {
-	gulp.start('styles', 'scripts');
+	gulp.start('styles', 'scripts', 'imgmin');
 });
 
 // Watch and auto-reload browser(s).
