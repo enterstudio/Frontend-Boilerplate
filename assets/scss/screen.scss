@@ -8,9 +8,16 @@
 
 // Settings and mixins
 @import "settings/font-face";
+@import "settings/fonts";
+@import "settings/colours";
 @import "settings/variables";
-@import "patterns/helpers"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
-@import "tools/mixins"; // Stylistic mixins (buttons, arrows etc)
+@import "settings/breakpoints";
+
+@import "tools/rems";
+@import "tools/media-queries"; // Stylistic mixins (buttons, arrows etc)
+
+@import "patterns/patterns"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
+
 
 // Grid - CSS Wizardry grids
 // @import "tools/grid"; // Use if required
@@ -23,3 +30,9 @@
 // header, footer, and other common areas
 
 // page specifics
+
+body {
+	@include breakpoint(small) {
+		background-color:pink;
+	}
+}
