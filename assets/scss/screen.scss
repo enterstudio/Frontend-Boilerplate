@@ -3,20 +3,17 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
-// Compass partials
-@import "compass/css3";
-
 // Normalize
-@import "partials/base/normalize";
+@import "base/normalize";
 
 // Settings and mixins
-@import "partials/base/fonts";
-@import "partials/base/variables";
-@import "modules/helpers"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
-@import "modules/mixins"; // Stylistic mixins (buttons, arrows etc)
+@import "settings/font-face";
+@import "settings/variables";
+@import "patterns/helpers"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
+@import "tools/mixins"; // Stylistic mixins (buttons, arrows etc)
 
 // Grid - CSS Wizardry grids
-@import "modules/grid";
+// @import "tools/grid"; // Use if required
 
 // Site specific files go here
 
