@@ -7,16 +7,16 @@
 @import "compass/css3";
 
 // Normalize
-@import "defaults/normalize";
+@import "partials/base/normalize";
 
 // Settings and mixins
-@import "defaults/fonts";
-@import "defaults/variables";
-@import "defaults/helpers"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
-@import "defaults/mixins"; // Stylistic mixins (buttons, arrows etc)
+@import "partials/base/fonts";
+@import "partials/base/variables";
+@import "modules/helpers"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
+@import "modules/mixins"; // Stylistic mixins (buttons, arrows etc)
 
 // Grid - CSS Wizardry grids
-@import "defaults/grid";
+@import "modules/grid";
 
 // Site specific files go here
 

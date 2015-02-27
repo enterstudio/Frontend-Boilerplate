@@ -11,4 +11,3 @@ A starting point for Architect frontend projects.
 ## TO DO:
 
 * Add base HTML page markup
-* Set up markup as includes (header and footer)
