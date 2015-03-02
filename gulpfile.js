@@ -45,7 +45,7 @@ gulp.task('styles', function () {
 		.pipe( $.rename({ suffix: '.min' }) )
 		.pipe( $.minifyCss() )
 		.pipe( gulp.dest('public/_css') )
-		.pipe( $.size({title: 'Styles'})) ;
+		.pipe( $.size({title: 'Styles'}));
 });
 
 // Sass Linting
@@ -70,7 +70,7 @@ gulp.task('scripts',function(){
 	.pipe( $.uglify() )
 	.pipe( $.rename({ suffix: '.min' }) )
 	.pipe( gulp.dest('public/_js') )
-	.pipe( $.size({title: 'Scripts'})) ;
+	.pipe( $.size({title: 'Scripts'}));
 });
 
 gulp.task('imgmin', function () {
@@ -80,7 +80,7 @@ gulp.task('imgmin', function () {
 			svgoPlugins: [{removeViewBox: false}],
 			use: [ pngquant() ]
 		}))
-		.pipe(gulp.dest('public/img'));
+		.pipe( gulp.dest('public/img'));
 });
 
 // Manual Dev task - speedy
