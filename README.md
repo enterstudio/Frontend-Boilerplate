@@ -6,7 +6,7 @@ A starting point for Architect front-end projects.
 ## Installation:
 
 - Download and unzip into project directory
-```wget https://github.com/wearearchitect/Frontend-Boilerplate/archive/master.zip```
+`wget https://github.com/wearearchitect/Frontend-Boilerplate/archive/master.zip`
 - run `npm install`
 - run `bundle install`
 - Away you go…
@@ -43,7 +43,8 @@ Tasks:
 
 The main directory is `assets` that contains all the styles, scripts, and images used to create the front-end. The `assets` directory structure is:
 
-```assets/
+```
+assets/
 |- img/           # use appropriate sub-folders
 |- js/
 |  |- vendor/
@@ -65,7 +66,8 @@ The main directory is `assets` that contains all the styles, scripts, and images
 
 Files are by default output to the `public` directory in the following folder structure:
 
-```public/
+```
+public/
 |- img/     # matches assets directory structure
 |- _js/
 |- _css/
@@ -73,7 +75,8 @@ Files are by default output to the `public` directory in the following folder st
 
 However the output directories can be changed based on the specific project using the `paths` object at the top of the `gruntfile`:
 
-```paths = {
+```
+paths = {
 	scss: 'assets/scss/*.scss',
 	js: 'assets/js/*.js',
 	img: 'assets/img/*'
@@ -106,7 +109,8 @@ In JavaScript a sub-folder of `modules` inside of  the `src` folder would be goo
 
 In Sass, sub-folders are encouraged to keep partial size down and keep related styles together. When creating a sub-folder within one of the main Sass folders, also create a manifest partial of the same name to include the partials contained within. For example, in the following file structure:
 
-```components/
+```
+components/
 |- forms/
    |- _select.scss
    |- _radio.scss
@@ -116,9 +120,10 @@ In Sass, sub-folders are encouraged to keep partial size down and keep related s
 
 The `_forms.scss` partial, should contain the manifest for the forms folder:
 
-```@import “forms/select”;
-@import “forms/radio”;
-@import “forms/checkbox”;
+```
+@import 'forms/select';
+@import 'forms/radio';
+@import 'forms/checkbox';
 ```
 
 ## License
