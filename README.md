@@ -68,7 +68,7 @@ Files are by default output to the `public` directory in the following folder st
 ```public/
 |- img/     # matches assets directory structure
 |- _js/
-|- _css/```
+|- _css/ ```
 
 However the output directories can be changed based on the specific project using the `paths` object at the top of the `gruntfile`:
 
@@ -76,7 +76,7 @@ However the output directories can be changed based on the specific project usin
 	scss: 'assets/scss/*.scss',
 	js: 'assets/js/*.js',
 	img: 'assets/img/*'
-}```
+} ```
 
 ### Sass structure
 
@@ -109,13 +109,13 @@ In Sass, sub-folders are encouraged to keep partial size down and keep related s
    |- _select.scss
    |- _radio.scss
    |- _checkbox.scss
-|- _forms.scss```
+|- _forms.scss ```
 
 The `_forms.scss` partial, should contain the manifest for the forms folder:
 
 ```@import “forms/select”;
 @import “forms/radio”;
-@import “forms/checkbox”;```
+@import “forms/checkbox”; ```
 
 ## License
 
