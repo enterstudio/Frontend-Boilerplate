@@ -5,7 +5,7 @@ A starting point for Architect front-end projects.
 
 ## Installation:
 
-- Download and unzip into project directory 
+- Download and unzip into project directory
 ```wget https://github.com/wearearchitect/Frontend-Boilerplate/archive/master.zip```
 - run `npm install`
 - run `bundle install`
@@ -44,7 +44,7 @@ Tasks:
 The main directory is `assets` that contains all the styles, scripts, and images used to create the front-end. The `assets` directory structure is:
 
 ```assets/
-|- img/           # use appropriate sub-folders 
+|- img/           # use appropriate sub-folders
 |- js/
 |  |- vendor/
 |  `- src/
@@ -77,7 +77,8 @@ However the output directories can be changed based on the specific project usin
 	scss: 'assets/scss/*.scss',
 	js: 'assets/js/*.js',
 	img: 'assets/img/*'
-} ```
+}
+```
 
 ### Sass structure
 
@@ -99,9 +100,9 @@ Rendering Sass should go in the remaining folders:
 
 ### Sub-folders
 
-The use of sub-folders is encouraged to further break down related files. 
+The use of sub-folders is encouraged to further break down related files.
 
-In JavaScript a sub-folder of `modules` inside of  the `src` folder would be good practice to break down any smaller functionality that is used by the files in the `src` folder. 
+In JavaScript a sub-folder of `modules` inside of  the `src` folder would be good practice to break down any smaller functionality that is used by the files in the `src` folder.
 
 In Sass, sub-folders are encouraged to keep partial size down and keep related styles together. When creating a sub-folder within one of the main Sass folders, also create a manifest partial of the same name to include the partials contained within. For example, in the following file structure:
 
@@ -110,13 +111,15 @@ In Sass, sub-folders are encouraged to keep partial size down and keep related s
    |- _select.scss
    |- _radio.scss
    |- _checkbox.scss
-|- _forms.scss ```
+|- _forms.scss
+```
 
 The `_forms.scss` partial, should contain the manifest for the forms folder:
 
 ```@import “forms/select”;
 @import “forms/radio”;
-@import “forms/checkbox”; ```
+@import “forms/checkbox”;
+```
 
 ## License
 
