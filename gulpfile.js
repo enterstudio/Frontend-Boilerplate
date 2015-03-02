@@ -7,6 +7,7 @@
 var $ = require('gulp-load-plugins')(),
 	gulp = require('gulp'),
 	del = require('del'),
+	fs = require('fs'),
 	pngquant = require('imagemin-pngquant'),
 	browserSync = require('browser-sync'),
 	reload = browserSync.reload,
@@ -75,11 +76,11 @@ gulp.task('scripts',function(){
 
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
-		.pipe($.imagemin({
-			progressive: true,
-			svgoPlugins: [{removeViewBox: false}],
-			use: [ pngquant() ]
-		}))
+		.pipe( $.cache( $.imagemin({
+				progressive: true,
+				svgoPlugins: [{removeViewBox: false}],
+				use: [ pngquant() ]
+			})))
 		.pipe( gulp.dest('public/img'));
 });
 
@@ -104,3 +105,10 @@ gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('assets/js/*.js', ['scripts', reload]);
 	gulp.watch(['public/*.html', 'public/*.php'], reload);
 });
+
+var imgminVersion = '2.2.1';
+
+function makeHashKey(file) {
+  // Key off the file contents, jshint version and options
+  return [file.contents.toString('utf8'), imgminVersion ].join('');
+}
