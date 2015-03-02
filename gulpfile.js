@@ -54,7 +54,7 @@ gulp.task('lint', function() {
 	return gulp.src(paths.scss)
 	.pipe( $.plumber({errorHandler: onError}) )
 	.pipe( $.scssLint( {
-		// 'bundleExec': true,
+		'bundleExec': true,
 		'config': '.scss-lint.yml',
 		'reporterOutput': 'scss-lint-report.xml'
 	}));
