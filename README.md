@@ -68,7 +68,8 @@ Files are by default output to the `public` directory in the following folder st
 ```public/
 |- img/     # matches assets directory structure
 |- _js/
-|- _css/ ```
+|- _css/
+```
 
 However the output directories can be changed based on the specific project using the `paths` object at the top of the `gruntfile`:
 
