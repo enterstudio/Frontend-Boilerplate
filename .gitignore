@@ -10,6 +10,7 @@ composer.lock
 # Sass
 .sass-cache
 node_modules
+scss-lint-report.xml
 
 # Node
 /node_modules
