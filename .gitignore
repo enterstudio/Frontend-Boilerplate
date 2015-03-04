@@ -10,6 +10,7 @@ composer.lock
 # Sass
 .sass-cache
 node_modules
+scss-lint-report.xml
 
 # Node
 /node_modules
@@ -29,3 +30,6 @@ node_modules
 
 # Bower
 /public/components
+
+# WordPress
+/public/wp-content/uploads
