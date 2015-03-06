@@ -9,8 +9,14 @@ var $ = require('gulp-load-plugins')(),
 	del = require('del'),
 	fs = require('fs'),
 	pngquant = require('imagemin-pngquant'),
+	runSequence = require('run-sequence'),
 	browserSync = require('browser-sync'),
 	reload = browserSync.reload,
+
+	basePaths = {
+  	src: 'assets/',
+  	dest: 'public/'
+	},
 
 	paths = {
 		scss: 'assets/scss/*.scss',
@@ -66,7 +72,7 @@ gulp.task('scripts',function(){
 	.pipe( $.plumber({errorHandler: onError}) )
 	.pipe( $.jshint() )
 	.pipe( $.jshint.reporter('default') )
-	.pipe( $.concat('scripts.js') )
+	.pipe( $.concat('core.js') )
 	.pipe( gulp.dest('public/_js') )
 	.pipe( $.uglify() )
 	.pipe( $.rename({ suffix: '.min' }) )
@@ -74,6 +80,7 @@ gulp.task('scripts',function(){
 	.pipe( $.size({title: 'Scripts'}));
 });
 
+// Images Task
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
 		.pipe( $.cache( $.imagemin({
@@ -81,22 +88,74 @@ gulp.task('imgmin', function () {
 				svgoPlugins: [{removeViewBox: false}],
 				use: [ pngquant() ]
 			})))
-		.pipe( gulp.dest('public/img'));
+		.pipe( gulp.dest('public/_img'));
+});
+
+// SVG Config
+var svgPaths = {
+  images: {
+    src: basePaths.src + 'img/svg',
+    dest: basePaths.dest + '_img'
+  },
+  sprite: {
+    src: basePaths.src + 'img/svg/*',
+    svgSymbols: '_img/svg/symbols/symbols.svg',
+    svgSymbolsPreview: '_img/svg/symbols/symbols.html'
+  }
+};
+
+// SVG Symbols Task
+// Create SVG Symbols for icons.
+gulp.task('svgSymbols', function () {
+  return gulp.src(svgPaths.sprite.src)
+    .pipe($.svgSprites({
+      mode: "symbols",
+      selector: "icon-%f",
+      svg: {
+        symbols: svgPaths.sprite.svgSymbols
+      },
+      preview: {
+        symbols: svgPaths.sprite.svgSymbolsPreview
+      }
+    }))
+    .pipe(gulp.dest(basePaths.dest))
+    .pipe($.size({title: 'SVG Symbols'}));
+});
+
+// SVG Document Injection
+// Inject SVG <symbol> block just after opening <body> tag.
+gulp.task('inject', function () {
+  var symbols = gulp
+    .src(basePaths.dest + svgPaths.sprite.svgSymbols)
+
+  function fileContents (filePath, file) {
+      return file.contents.toString();
+  }
+
+  return gulp
+    .src('./public/index.php')
+    .pipe($.inject(symbols, { transform: fileContents }))
+    .pipe(gulp.dest('./public'));
+});
+
+// Run all SVG tasks
+gulp.task('svg', function(cb) {
+  runSequence('svgSymbols', 'inject', cb);
 });
 
 // Manual Dev task - speedy
 gulp.task('dev', function() {
-	gulp.start('scripts', 'styles');
+    gulp.start('scripts', 'styles');
 });
 
 // Clean Output Directories
 gulp.task('clean', function() {
-	del(['public/_css', 'public/_js'], { read: false })
+    del(['public/_fonts', 'public/_css', 'public/_js', 'public/_img'], { read: false })
 });
 
 // Manual Default task - does everything
-gulp.task('default', ['clean'], function() {
-	gulp.start('styles', 'scripts', 'imgmin');
+gulp.task('default', ['clean'], function(cb) {
+    runSequence('styles', ['scripts', 'imgmin'], 'svg', cb);
 });
 
 // Watch and auto-reload browser(s).
