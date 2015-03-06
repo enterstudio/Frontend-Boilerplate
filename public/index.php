@@ -15,6 +15,8 @@
         <!-- Styles -->
     </head>
     <body>
+        <!-- inject:svg -->
+        <!-- endinject -->
 
     	<!-- Scripts -->
     	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
