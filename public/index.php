@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <!doctype html>
 <html class="no-js" lang="">
     <head>
@@ -23,4 +21,3 @@
         <script>window.jQuery || document.write('<script src="_js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
     </body>
 </html>
->>>>>>> master
