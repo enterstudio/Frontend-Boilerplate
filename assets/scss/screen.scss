@@ -16,7 +16,7 @@
 @import "tools/rems";
 @import "tools/media-queries"; // Stylistic mixins (buttons, arrows etc)
 
-@import "patterns/patterns"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
+@import "patterns"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
 
 
 // Grid - CSS Wizardry grids
@@ -30,9 +30,3 @@
 // header, footer, and other common areas
 
 // page specifics
-
-body {
-	@include breakpoint(small) {
-		background-color:pink;
-	}
-}

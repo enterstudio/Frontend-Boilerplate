@@ -19,7 +19,7 @@ var $ = require('gulp-load-plugins')(),
 	},
 
 	onError = function(err) {
-		notify.onError({
+		$.notify.onError({
 			title: "Gulp",
 			subtitle: "Failure!",
 			message: "Error: <%= error.message %>",
@@ -105,10 +105,3 @@ gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('assets/js/*.js', ['scripts', reload]);
 	gulp.watch(['public/*.html', 'public/*.php'], reload);
 });
-
-var imgminVersion = '2.2.1';
-
-function makeHashKey(file) {
-  // Key off the file contents, jshint version and options
-  return [file.contents.toString('utf8'), imgminVersion ].join('');
-}
