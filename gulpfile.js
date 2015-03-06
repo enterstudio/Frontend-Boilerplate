@@ -116,6 +116,6 @@ gulp.task('default', ['clean'], function() {
 // Watch and auto-reload browser(s).
 gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch(basePaths.src + 'scss/*.scss', ['styles', reload]);
-	gulp.watch(basePaths.src + '/js/*.js', ['scripts', reload]);
-	gulp.watch([basePaths.src * '.html', basePaths.src + '.php'], reload);
+	gulp.watch(basePaths.src + 'js/*.js', ['scripts', reload]);
+	gulp.watch([basePaths.dest * '*.html', basePaths.dest + '*.php'], reload);
 });
