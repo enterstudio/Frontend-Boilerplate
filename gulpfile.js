@@ -9,6 +9,7 @@ var $ = require('gulp-load-plugins')(),
 	del = require('del'),
 	fs = require('fs'),
 	pngquant = require('imagemin-pngquant'),
+	runSequence = require('run-sequence'),
 	browserSync = require('browser-sync'),
 	reload = browserSync.reload,
 
@@ -109,13 +110,13 @@ gulp.task('clean', function() {
 });
 
 // Manual Default task - does everything
-gulp.task('default', ['clean'], function() {
-	gulp.start('styles', 'scripts', 'vendorScripts', 'imgmin');
+gulp.task('default', ['clean'], function(cb) {
+    runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin', cb);
 });
 
 // Watch and auto-reload browser(s).
 gulp.task('watch', ['browser-sync'], function() {
-	gulp.watch(basePaths.src + 'scss/*.scss', ['styles', reload]);
-	gulp.watch(basePaths.src + 'js/*.js', ['scripts', reload]);
-	gulp.watch([basePaths.dest * '*.html', basePaths.dest + '*.php'], reload);
+  gulp.watch('assets/scss/*.scss', ['styles', reload]);
+  gulp.watch('assets/js/*.js', ['scripts', reload]);
+	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
