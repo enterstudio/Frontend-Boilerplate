@@ -1,23 +1,38 @@
-// Rems with pixel fallback for any property
-// @author @BPScott (https://github.com/BPScott/bpscott.github.io/blob/develop/source/stylesheets/vendor/_rem.scss)
-@mixin rem($property, $px-values, $baseline-px: $base-font-size) {
-	// Convert the baseline into rems
-	$baseline-rem: $baseline-px / 1rem;
+// Rems with pixel fallback
+// @author Chris Coyier (https://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
+// @contributor Jake Mulley (to take a px and output rem, rather than opposite)
 
-	// Create an empty list that we can dump values into
-	$rem-values: ();
-	@each $value in $px-values {
-	// If the value is zero, return 0
-	$rem-values: append($rem-values, if($value == 0, $value, $value / $baseline-rem));
-	}
-
-	// Output the property's px and rem values
-	#{$property}: $px-values;
-	#{$property}: $rem-values;
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
 }
 
+@mixin rem($property, $values...) {
+  $max: length($values);
+  $pxValues: '';
+  $remValues: '';
 
-// Font size mixin to make use of the rem mixin, just making it look a little simpler
-@mixin font-size($size) {
-	@include rem('font-size', $size * 1px);
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    // $pxValues: #{$pxValues + $value*16}px;
+    $remValues: #{$remValues + $value/16}rem;
+
+    @if $i < $max {
+      // $pxValues: #{$pxValues + " "};
+      $remValues: #{$remValues + " "};
+    }
+  } 
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    // $remValues: #{$remValues + $value}rem;
+	$pxValues: #{$pxValues + $value}px;
+
+    @if $i < $max {
+      //$remValues: #{$remValues + " "};
+      $pxValues: #{$pxValues + " "};
+    }
+  } 
+  
+  #{$property}: $pxValues; 
+  #{$property}: $remValues; 
 }
