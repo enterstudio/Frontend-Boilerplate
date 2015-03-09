@@ -14,13 +14,16 @@ var $ = require('gulp-load-plugins')(),
 	reload = browserSync.reload,
 
 	basePaths = {
-  	src: 'assets/',
-  	dest: 'public/'
+		src: 'assets/',
+		dest: 'public/'
 	},
 
 	paths = {
 		scss: basePaths.src + 'scss/*.scss',
-	  js: { src: basePaths.src + 'js/src/*.js', vendor: basePaths.src + 'js/vendor/*.js' },
+		js: {
+			src: basePaths.src + 'js/src/*.js',
+			vendor: basePaths.src + 'js/vendor/*.js'
+		},
 		img: basePaths.src + 'img/**'
 	},
 
@@ -82,10 +85,10 @@ gulp.task('scripts',function(){
 
 // Leave vendor scripts intact, uglify and copy to public folder.
 gulp.task('vendorScripts',function(){
-  return gulp.src(paths.js.vendor)
-    .pipe($.uglify())
-    .pipe(gulp.dest(basePaths.dest + '_js/vendor'))
-    .pipe($.size({title: 'Vendor Scripts'}));
+	return gulp.src(paths.js.vendor)
+	.pipe($.uglify())
+	.pipe(gulp.dest(basePaths.dest + '_js/vendor'))
+	.pipe($.size({title: 'Vendor Scripts'}));
 });
 
 // Images Task
@@ -111,12 +114,12 @@ gulp.task('clean', function() {
 
 // Manual Default task - does everything
 gulp.task('default', ['clean'], function(cb) {
-    runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin', cb);
+	runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin', cb);
 });
 
 // Watch and auto-reload browser(s).
 gulp.task('watch', ['browser-sync'], function() {
-  gulp.watch('assets/scss/*.scss', ['styles', reload]);
-  gulp.watch('assets/js/*.js', ['scripts', reload]);
+	gulp.watch('assets/scss/*.scss', ['styles', reload]);
+	gulp.watch('assets/js/*.js', ['scripts', reload]);
 	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
