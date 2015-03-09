@@ -13,22 +13,18 @@
 
   @for $i from 1 through $max {
     $value: strip-unit(nth($values, $i));
-    // $pxValues: #{$pxValues + $value*16}px;
     $remValues: #{$remValues + $value/16}rem;
 
     @if $i < $max {
-      // $pxValues: #{$pxValues + " "};
       $remValues: #{$remValues + " "};
     }
   } 
 
   @for $i from 1 through $max {
     $value: strip-unit(nth($values, $i));
-    // $remValues: #{$remValues + $value}rem;
 	$pxValues: #{$pxValues + $value}px;
 
     @if $i < $max {
-      //$remValues: #{$remValues + " "};
       $pxValues: #{$pxValues + " "};
     }
   } 
