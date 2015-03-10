@@ -30,6 +30,9 @@ The standard build tool we’re now using is Gulp with the following plugins:
 - gulp-scss-lint
 - gulp-size
 - gulp-uglify
+- gulp-svg-sprites
+- gulp-inject
+- run-sequence
 
 In the `gulpfile`, plugins are loaded with `gulp-load-plugins` so should be used with the `$.` prefix.
 
