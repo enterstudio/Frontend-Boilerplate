@@ -29,7 +29,7 @@ var $ = require('gulp-load-plugins')(),
 			src: basePaths.src + 'js/src/*.js',
 			vendor: basePaths.src + 'js/vendor/*.js'
 		},
-		img: basePaths.src + 'img/**'
+		img: basePaths.src + 'img/**/*'
 	},
 
 
@@ -166,8 +166,8 @@ var svgPaths = {
   },
   sprite: {
     src: basePaths.src + 'img/svg/*',
-    svgSymbols: '_img/svg/symbols/symbols.svg',
-    svgSymbolsPreview: '_img/svg/symbols/symbols.html'
+    svgSymbols: '_img/svg/icons/icons.svg',
+    svgSymbolsPreview: '_img/svg/icons/icons-preview.html'
   }
 };
 
@@ -226,7 +226,7 @@ gulp.task('dev', function() {
 \*-----------------------------------------*/
 
 gulp.task('clean', function() {
-	del([basePaths.dest + '_css', basePaths.dest + '_js'], { read: false })
+	del([basePaths.dest + '_css', basePaths.dest + '_js', basePaths.dest + '_img/svg/*'], { read: false })
 });
 
 
