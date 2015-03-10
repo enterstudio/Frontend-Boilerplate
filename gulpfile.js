@@ -1,6 +1,6 @@
 /*!
  * The Ultimate Gulp File
- * $ npm install gulp-sass gulp-autoprefixer gulp-minify-css gulp-jshint gulp-concat gulp-uglify gulp-rename gulp-cache gulp-bower gulp-scss-lint gulp-size gulp-uglify browser-sync del --save
+ * $ npm install gulp-sass gulp-autoprefixer gulp-minify-css gulp-jshint gulp-concat gulp-uglify gulp-rename gulp-cache gulp-bower gulp-scss-lint gulp-size gulp-uglify gulp-svg-sprites imagemin-pngquant run-sequence browser-sync del --save
  */
 
 // Variables
@@ -166,12 +166,13 @@ gulp.task('clean', function() {
 
 // Manual Default task - does everything
 gulp.task('default', ['clean'], function(cb) {
-	runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin', cb);
+	runSequence('styles', ['scripts', 'vendorScripts', 'imgmin'], 'svg', cb);
 });
 
 // Watch and auto-reload browser(s).
 gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('assets/scss/*.scss', ['styles', reload]);
 	gulp.watch('assets/js/*.js', ['scripts', reload]);
+  gulp.watch('assets/img/svg/*.svg', ['svg', reload]);
 	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
