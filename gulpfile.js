@@ -19,9 +19,12 @@ var $ = require('gulp-load-plugins')(),
 	},
 
 	paths = {
-		scss: 'assets/scss/*.scss',
-		js: 'assets/js/*.js',
-		img: 'assets/img/*'
+		scss: basePaths.src + 'scss/*.scss',
+		js: {
+			src: basePaths.src + 'js/src/*.js',
+			vendor: basePaths.src + 'js/vendor/*.js'
+		},
+		img: basePaths.src + 'img/**'
 	},
 
 	onError = function(err) {
@@ -48,10 +51,10 @@ gulp.task('styles', function () {
 		.pipe( $.plumber({errorHandler: onError}) )
 		.pipe( $.sass({ style: 'expanded', }) )
 		.pipe( $.autoprefixer('last 2 version') )
-		.pipe( gulp.dest('public/_css') )
+		.pipe( gulp.dest(basePaths.dest + '_css') )
 		.pipe( $.rename({ suffix: '.min' }) )
 		.pipe( $.minifyCss() )
-		.pipe( gulp.dest('public/_css') )
+		.pipe( gulp.dest(basePaths.dest + '_css') )
 		.pipe( $.size({title: 'Styles'}));
 });
 
@@ -68,15 +71,15 @@ gulp.task('lint', function() {
 
 // Scripts Task
 gulp.task('scripts',function(){
-	gulp.src(paths.js)
+	gulp.src(paths.js.src)
 	.pipe( $.plumber({errorHandler: onError}) )
 	.pipe( $.jshint() )
 	.pipe( $.jshint.reporter('default') )
 	.pipe( $.concat('core.js') )
-	.pipe( gulp.dest('public/_js') )
+	.pipe( gulp.dest(basePaths.dest + '_js') )
 	.pipe( $.uglify() )
 	.pipe( $.rename({ suffix: '.min' }) )
-	.pipe( gulp.dest('public/_js') )
+	.pipe( gulp.dest(basePaths.dest + '_js') )
 	.pipe( $.size({title: 'Scripts'}));
 });
 
@@ -88,7 +91,7 @@ gulp.task('imgmin', function () {
 				svgoPlugins: [{removeViewBox: false}],
 				use: [ pngquant() ]
 			})))
-		.pipe( gulp.dest('public/_img'));
+		.pipe( gulp.dest(basePaths.dest + '_img'));
 });
 
 // SVG Config
@@ -150,17 +153,17 @@ gulp.task('dev', function() {
 
 // Clean Output Directories
 gulp.task('clean', function() {
-    del(['public/_fonts', 'public/_css', 'public/_js', 'public/_img'], { read: false })
+	del([basePaths.dest + '_css', basePaths.dest + '_js', basePaths.dest + '_img'], { read: false })
 });
 
 // Manual Default task - does everything
 gulp.task('default', ['clean'], function(cb) {
-    runSequence('styles', ['scripts', 'imgmin'], 'svg', cb);
+	runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin',  'svg' cb);
 });
 
 // Watch and auto-reload browser(s).
 gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch('assets/scss/*.scss', ['styles', reload]);
 	gulp.watch('assets/js/*.js', ['scripts', reload]);
-	gulp.watch(['public/*.html', 'public/*.php'], reload);
+	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
