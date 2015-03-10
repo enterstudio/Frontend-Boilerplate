@@ -14,8 +14,8 @@ var $ = require('gulp-load-plugins')(),
 	reload = browserSync.reload,
 
 	basePaths = {
-  	src: 'assets/',
-  	dest: 'public/'
+		src: 'assets/',
+		dest: 'public/'
 	},
 
 	paths = {
@@ -81,6 +81,14 @@ gulp.task('scripts',function(){
 	.pipe( $.rename({ suffix: '.min' }) )
 	.pipe( gulp.dest(basePaths.dest + '_js') )
 	.pipe( $.size({title: 'Scripts'}));
+});
+
+// Leave vendor scripts intact, uglify and copy to public folder.
+gulp.task('vendorScripts',function(){
+	return gulp.src(paths.js.vendor)
+	.pipe($.uglify())
+	.pipe(gulp.dest(basePaths.dest + '_js/vendor'))
+	.pipe($.size({title: 'Vendor Scripts'}));
 });
 
 // Images Task
@@ -153,12 +161,12 @@ gulp.task('dev', function() {
 
 // Clean Output Directories
 gulp.task('clean', function() {
-	del([basePaths.dest + '_css', basePaths.dest + '_js', basePaths.dest + '_img'], { read: false })
+	del([basePaths.dest + '_css', basePaths.dest + '_js'], { read: false })
 });
 
 // Manual Default task - does everything
 gulp.task('default', ['clean'], function(cb) {
-	runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin',  'svg' cb);
+	runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin', cb);
 });
 
 // Watch and auto-reload browser(s).
