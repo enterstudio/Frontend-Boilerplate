@@ -158,7 +158,22 @@ gulp.task('imgmin', function () {
 		.pipe( gulp.dest(basePaths.dest + '_img'));
 });
 
-// SVG Config
+
+/*-----------------------------------------*\
+   SVG ICONS TASKS
+   - Config
+   - Create Symbol Sprites
+   - Create and add Symbol ID (id="icon-example")
+   - Create icon library preview page
+   - Output compiled icon library
+   - Inject into page
+
+   NB: Imgmin optimises all SVGs, then
+   outputs them to the _img folder.
+   So we have the icon library and the
+   individual SVGs at ourt disposal.
+\*-----------------------------------------*/
+
 var svgPaths = {
   images: {
     src: basePaths.src + 'img/svg',
