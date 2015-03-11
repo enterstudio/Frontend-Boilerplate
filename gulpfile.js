@@ -24,9 +24,9 @@ var $ = require('gulp-load-plugins')(),
 
 	// Folder Paths
 	paths = {
-		scss: basePaths.src + 'scss/*.scss',
+		scss: basePaths.src + 'scss/**/*.scss',
 		js: {
-			src: basePaths.src + 'js/src/*.js',
+			src: basePaths.src + 'js/src/**/*.js',
 			vendor: basePaths.src + 'js/vendor/*.js'
 		},
 		img: basePaths.src + 'img/**/*'
@@ -262,8 +262,7 @@ gulp.task('default', ['clean'], function(cb) {
 \*-----------------------------------------*/
 
 gulp.task('watch', ['browser-sync'], function() {
-	gulp.watch('assets/scss/*.scss', ['styles', reload]);
-	gulp.watch('assets/js/*.js', ['scripts', reload]);
-  gulp.watch('assets/img/svg/*.svg', ['svg', reload]);
+	gulp.watch('assets/scss/**/*.scss', ['styles', reload]);
+	gulp.watch('assets/js/**/*.js', ['scripts', reload]);
 	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
