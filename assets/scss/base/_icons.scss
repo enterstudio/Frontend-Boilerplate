@@ -1,0 +1,15 @@
+.icon {
+  width:32px;
+  height:32px;
+	fill:#222;
+}
+
+.icon-button {
+	display:inline-block;
+	svg {
+		transition: fill 0.2s ease-in;
+		&:hover {
+			fill: #FFC627;
+		}
+	}
+}
