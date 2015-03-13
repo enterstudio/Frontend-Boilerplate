@@ -180,7 +180,7 @@ var svgPaths = {
     dest: basePaths.dest + '_img'
   },
   sprite: {
-    src: basePaths.src + 'img/svg/*',
+    src: basePaths.src + 'img/svg/*.svg',
     svgSymbols: '_img/svg/icons/icons.svg',
     svgSymbolsPreview: '_img/svg/icons/icons-preview.html'
   }
@@ -241,7 +241,11 @@ gulp.task('dev', function() {
 \*-----------------------------------------*/
 
 gulp.task('clean', function() {
-	del([basePaths.dest + '_css', basePaths.dest + '_js', basePaths.dest + '_img/svg/*'], { read: false })
+	del([
+		basePaths.dest + '_css',
+		basePaths.dest + '_js',
+		basePaths.dest + '_img/svg/*'
+	], { read: false })
 });
 
 
