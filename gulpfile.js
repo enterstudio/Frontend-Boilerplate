@@ -150,6 +150,12 @@ gulp.task('vendorScripts',function(){
 
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
+	  .pipe($.cheerio({
+      run: function ($) {
+          $('[fill]').removeAttr('fill');
+     	},
+      parserOptions: { xmlMode: true }
+  	}))
 		.pipe( $.cache( $.imagemin({
 				progressive: true,
 				svgoPlugins: [{removeViewBox: false}],
@@ -222,6 +228,12 @@ gulp.task('inject', function () {
 
   return gulp
     .src('./public/index.php')
+    .pipe($.cheerio({
+      run: function ($) {
+          $('[fill]').removeAttr('fill');
+     	},
+      parserOptions: { xmlMode: true }
+  	}))
     .pipe($.inject(symbols, { transform: fileContents }))
     .pipe(gulp.dest('./public'));
 });
