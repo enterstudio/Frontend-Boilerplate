@@ -42,6 +42,32 @@ Tasks:
 - `gulp lint` - task to lint Sass code (should be run often - code should pass lint tests before a PR is accepted)
 - `gulp` - task to run on before staging or production (on server)
 
+### The SVG Icon System
+
+Run the `gulp svg` task to create your SVG icon block.
+
+SVG files added to `assets/img/svg` will be optimised and added to an `icons.svg` file (this is also created by the `gulp svg` task). Having run the task, you'll also now find a handy Icons Preview - a generated HTML page that allows you to see your freshly compressed SVGs alongside the SVG syntax needed to display the icons on your site (see below). Each icon's class and ID will be `icon-` + filename.
+
+The task also injects the symbols block into the head of your document inbetween the `<!-- inject:svg -->` and `<!-- endinject -->` (this should always be placed after the opening `<body>` tag more than likely in your `header.php`). You're then free to use your icons like this:
+
+```
+<svg class="icon-twitter">
+	<use xlink:href="#icon-twitter"></use>
+</svg>
+```
+
+They can then be styled with all the CSS you desire.
+
+NB: Browser support is solid and this system will work in IE9 and up. Critical icons needed to display in IE8 can be intiated with the [SVG For Everybody](https://github.com/jonathantneal/svg4everybody) polyfill.
+
+
+Further reading:
+
+- [A Compendium Of SVG Information](https://css-tricks.com/mega-list-svg-information/)
+- [Accessible SVG](https://developers.google.com/web/starter-kit)
+- [SVG vs. Icon Fonts](https://css-tricks.com/icon-fonts-vs-svg/)
+- [An Overview of SVG Sprite Creation Techniques](http://24ways.org/2014/an-overview-of-svg-sprite-creation-techniques/)
+
 ## Structure
 
 The main directory is `assets` that contains all the styles, scripts, and images used to create the front-end. The `assets` directory structure is:
