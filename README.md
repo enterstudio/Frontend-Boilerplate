@@ -60,13 +60,13 @@ They can then be styled with all the CSS you desire.
 
 NB: Browser support is solid and this system will work in IE9 and up. Critical icons needed to display in IE8 can be intiated with the [SVG For Everybody](https://github.com/jonathantneal/svg4everybody) polyfill.
 
-
 Further reading:
 
 - [A Compendium Of SVG Information](https://css-tricks.com/mega-list-svg-information/)
 - [Accessible SVG](https://developers.google.com/web/starter-kit)
 - [SVG vs. Icon Fonts](https://css-tricks.com/icon-fonts-vs-svg/)
 - [An Overview of SVG Sprite Creation Techniques](http://24ways.org/2014/an-overview-of-svg-sprite-creation-techniques/)
+- [Ten Reasons We Switched From An Icon Font to SVG](http://ianfeather.co.uk/ten-reasons-we-switched-from-an-icon-font-to-svg/)
 
 ## Structure
 
