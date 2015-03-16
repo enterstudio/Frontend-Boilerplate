@@ -46,7 +46,7 @@ Tasks:
 
 Run the `gulp svg` task to create your SVG icon block.
 
-SVG files added to `assets/img/svg` will be optimised and added to an `icons.svg` file (this is also created by the `gulp svg` task). Having run the task, you'll also now find a handy Icons Preview - a generated HTML page that allows you to see your freshly compressed SVGs alongside the SVG syntax needed to display the icons on your site (see below). Each icon's class and ID will be `icon-` + filename.
+SVG files added to `assets/img/svg` will be optimised and added to an `icons.svg` file (this is also created by the `gulp svg` task). Having run the task, you'll also now find a handy Icons Preview - a generated HTML page that allows you to see your freshly compressed SVGs alongside the SVG syntax needed to display the icons on your site (see below). Each icon's class will be `icon-` + filename.
 
 The task also injects the symbols block into the head of your document inbetween the `<!-- inject:svg -->` and `<!-- endinject -->` (this should always be placed after the opening `<body>` tag more than likely in your `header.php`). You're then free to use your icons like this:
 

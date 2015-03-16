@@ -1,3 +1,11 @@
+// SVG ICONS - BASIC USAGE
+
+// <a href="/" class="icon-button">
+// <svg class="icon icon-twitter">
+// 	<use xlink:href="#icon-twitter"></use>
+// </svg>
+// </a>
+
 .icon {
   width:32px;
   height:32px;
