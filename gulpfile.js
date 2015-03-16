@@ -190,6 +190,12 @@ var svgPaths = {
 // Create SVG Symbols for icons.
 gulp.task('svgSymbols', function () {
   return gulp.src(svgPaths.sprite.src)
+    .pipe($.cheerio({
+      run: function ($) {
+          $('[fill]').removeAttr('fill');
+      },
+      parserOptions: { xmlMode: true }
+  	}))
     .pipe($.svgSprites({
       mode: "symbols",
       selector: "icon-%f",
