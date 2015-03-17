@@ -19,12 +19,13 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.0",
-    "gulp-sass": "^1.3.3",
+    "gulp-ruby-sass": "*",
     "gulp-scss-lint": "^0.1.7",
     "gulp-size": "^1.2.0",
-    "gulp-svg-sprites": "^2.0.1",
+    "gulp-svg-sprite": "*",
     "gulp-uglify": "^1.1.0",
     "imagemin-pngquant": "^4.0.0",
+    "lazypipe": "*",
     "run-sequence": "^1.0.2"
   }
 }

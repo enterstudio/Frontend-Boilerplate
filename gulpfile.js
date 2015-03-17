@@ -11,6 +11,7 @@ var $ = require('gulp-load-plugins')(),
 	gulp = require('gulp'),
 	del = require('del'),
 	fs = require('fs'),
+	lazypipe    = require('lazypipe'),
 	pngquant = require('imagemin-pngquant'),
 	runSequence = require('run-sequence'),
 	browserSync = require('browser-sync'),
@@ -24,7 +25,7 @@ var $ = require('gulp-load-plugins')(),
 
 	// Folder Paths
 	paths = {
-		scss: basePaths.src + 'scss/**/*.scss',
+		scss: basePaths.src + 'scss',
 		js: {
 			src: basePaths.src + 'js/src/**/*.js',
 			vendor: basePaths.src + 'js/vendor/*.js'
@@ -74,9 +75,8 @@ gulp.task('browser-sync', function() {
 \*-----------------------------------------*/
 
 gulp.task('styles', function () {
-	return gulp.src(paths.scss)
+	return $.rubySass( paths.scss, { style: 'expanded'})
 		.pipe( $.plumber({errorHandler: onError}) )
-		.pipe( $.sass({ style: 'expanded', }) )
 		.pipe( $.autoprefixer('last 2 version') )
 		.pipe( gulp.dest(basePaths.dest + '_css') )
 		.pipe( $.rename({ suffix: '.min' }) )
@@ -183,12 +183,11 @@ gulp.task('imgmin', function () {
 var svgPaths = {
   images: {
     src: basePaths.src + 'img/svg',
-    dest: basePaths.dest + '_img'
+    dest: '_img'
   },
   sprite: {
     src: basePaths.src + 'img/svg/*.svg',
     svgSymbols: '_img/svg/icons/icons.svg',
-    svgSymbolsPreview: '_img/svg/icons/icons-preview.html'
   }
 };
 
@@ -196,47 +195,47 @@ var svgPaths = {
 // Create SVG Symbols for icons.
 gulp.task('svgSymbols', function () {
   return gulp.src(svgPaths.sprite.src)
-    .pipe($.cheerio({
-      run: function ($) {
-          $('[fill]').removeAttr('fill');
+    .pipe(stripAttrs())
+    .pipe($.svgSprite(
+      {
+        mode        : {
+	        symbol      : {
+	        prefix      : ".icon-%s",
+	        dimensions  : "%s",
+	        sprite      : "svg/icons/icons.svg",
+	        dest        : svgPaths.images.dest,
+	        inline 			: true,
+	        "example": {
+	          "dest": "svg/icons/icons-preview.html"
+	          }
+	        }
       },
-      parserOptions: { xmlMode: true }
-  	}))
-    .pipe($.svgSprites({
-      mode: "symbols",
-      selector: "icon-%f",
-      svg: {
-        symbols: svgPaths.sprite.svgSymbols
-      },
-      preview: {
-        symbols: svgPaths.sprite.svgSymbolsPreview
+        svg                     : {
+          xmlDeclaration      : false,
+          doctypeDeclaration  : false,
+          dimensionAttributes : false
+        }
       }
-    }))
+    ))
     .pipe(gulp.dest(basePaths.dest))
     .pipe($.size({title: 'SVG Symbols'}));
-});
+  });
 
 // SVG Document Injection
 // Inject SVG <symbol> block just after opening <body> tag.
 gulp.task('inject', function () {
-  var symbols = gulp
-    .src(basePaths.dest + svgPaths.sprite.svgSymbols)
+  var symbols = gulp.src(basePaths.dest + svgPaths.sprite.svgSymbols);
 
   function fileContents (filePath, file) {
-      return file.contents.toString();
+    return file.contents.toString();
   }
 
-  return gulp
-    .src('./public/index.php')
-    .pipe($.cheerio({
-      run: function ($) {
-          $('[fill]').removeAttr('fill');
-     	},
-      parserOptions: { xmlMode: true }
-  	}))
+  return gulp.src('./public/index.php')
+    .pipe(stripAttrs())
     .pipe($.inject(symbols, { transform: fileContents }))
     .pipe(gulp.dest('./public'));
 });
+
 
 // Run all SVG tasks
 gulp.task('svg', function(cb) {
@@ -280,7 +279,28 @@ gulp.task('default', ['clean'], function(cb) {
 \*-----------------------------------------*/
 
 gulp.task('watch', ['browser-sync'], function() {
-	gulp.watch('assets/scss/**/*.scss', ['styles', reload]);
-	gulp.watch('assets/js/**/*.js', ['scripts', reload]);
-	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
+
+  gulp.watch('gulpfile.js', ['default']);
+  gulp.watch('bower.json', ['bower']);
+
+  gulp.watch('assets/scss/**/*.scss', ['styles', reload]);
+  gulp.watch('assets/js/**/*.js', ['scripts', reload]);
+  gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
+
+/*-----------------------------------------*\
+   CUSTOM PIPES
+   - Any pipes used more than once
+\*-----------------------------------------*/
+
+// Strips attributes from SVGs
+var stripAttrs = lazypipe()
+  .pipe(
+    $.cheerio,
+    {
+      run: function ($) {
+        $('[fill]').removeAttr('fill');
+      },
+      parserOptions: { xmlMode: true }
+    }
+  );
