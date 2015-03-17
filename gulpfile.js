@@ -11,11 +11,15 @@ var $ = require('gulp-load-plugins')(),
 	gulp = require('gulp'),
 	del = require('del'),
 	fs = require('fs'),
-	lazypipe    = require('lazypipe'),
+	lazypipe = require('lazypipe'),
+  argv = require('yargs').argv,
 	pngquant = require('imagemin-pngquant'),
 	runSequence = require('run-sequence'),
 	browserSync = require('browser-sync'),
 	reload = browserSync.reload,
+
+  // Environments
+  prod = !!(argv.prod), // true if --prod flag is used
 
 	// Base Paths
 	basePaths = {
@@ -85,7 +89,6 @@ gulp.task('styles', function () {
 		.pipe( $.size({title: 'Styles'}));
 });
 
-
 /*-----------------------------------------*\
     SASS LINTING
     - Keep your code squeaky clean
@@ -115,9 +118,9 @@ gulp.task('lint', function() {
 
 gulp.task('scripts',function(){
 	gulp.src(paths.js.src)
-	.pipe( $.plumber({errorHandler: onError}) )
-	.pipe( $.jshint() )
-	.pipe( $.jshint.reporter('default') )
+	.pipe( $.if(!prod, $.plumber({errorHandler: onError}) ))
+	.pipe( $.if(!prod, $.jshint() ))
+	.pipe( $.if(!prod, $.jshint.reporter('default') ))
 	.pipe( $.concat('core.js') )
 	.pipe( gulp.dest(basePaths.dest + '_js') )
 	.pipe( $.uglify() )
@@ -150,17 +153,12 @@ gulp.task('vendorScripts',function(){
 
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
-	  .pipe($.cheerio({
-      run: function ($) {
-          $('[fill]').removeAttr('fill');
-     	},
-      parserOptions: { xmlMode: true }
-  	}))
-		.pipe( $.cache( $.imagemin({
+	  .pipe(stripAttrs())
+		.pipe( $.if(!prod, $.cache( $.imagemin({
 				progressive: true,
 				svgoPlugins: [{removeViewBox: false}],
 				use: [ pngquant() ]
-			})))
+			}))))
 		.pipe( gulp.dest(basePaths.dest + '_img'));
 });
 
@@ -211,8 +209,8 @@ gulp.task('svgSymbols', function () {
 	        }
       },
         svg                     : {
-          xmlDeclaration      : false,
-          doctypeDeclaration  : false,
+          // xmlDeclaration      : false,
+          // doctypeDeclaration  : false,
           dimensionAttributes : false
         }
       }
@@ -231,7 +229,6 @@ gulp.task('inject', function () {
   }
 
   return gulp.src('./public/index.php')
-    .pipe(stripAttrs())
     .pipe($.inject(symbols, { transform: fileContents }))
     .pipe(gulp.dest('./public'));
 });
