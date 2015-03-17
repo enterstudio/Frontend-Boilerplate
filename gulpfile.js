@@ -1,9 +1,12 @@
-/*!
- * The Ultimate Gulp File
- * $ npm install gulp-sass gulp-autoprefixer gulp-minify-css gulp-jshint gulp-concat gulp-uglify gulp-rename gulp-cache gulp-bower gulp-scss-lint gulp-size gulp-uglify browser-sync del --save
+/**
+ * GULPFILE - By @wearearchitect
  */
 
-// Variables
+/*-----------------------------------------*\
+    VARIABLES
+\*-----------------------------------------*/
+
+// Dependencies
 var $ = require('gulp-load-plugins')(),
 	gulp = require('gulp'),
 	del = require('del'),
@@ -13,19 +16,27 @@ var $ = require('gulp-load-plugins')(),
 	browserSync = require('browser-sync'),
 	reload = browserSync.reload,
 
+	// Base Paths
 	basePaths = {
 		src: 'assets/',
 		dest: 'public/'
 	},
 
+	// Assets Folder Paths
 	paths = {
-		scss: basePaths.src + 'scss/*.scss',
+		scss: basePaths.src + 'scss/**/*.scss',
 		js: {
-			src: basePaths.src + 'js/src/*.js',
+			src: basePaths.src + 'js/src/**/*.js',
 			vendor: basePaths.src + 'js/vendor/*.js'
 		},
 		img: basePaths.src + 'img/**'
 	},
+
+
+/*-----------------------------------------*\
+    ERROR NOTIFICATION
+    - Beep!
+\*-----------------------------------------*/
 
 	onError = function(err) {
 		$.notify.onError({
@@ -37,7 +48,12 @@ var $ = require('gulp-load-plugins')(),
 		this.emit('end');
 	};
 
-// Browser Sync
+
+/*-----------------------------------------*\
+    BROWSER SYNC
+    - View project at test.dev:3000
+\*-----------------------------------------*/
+
 gulp.task('browser-sync', function() {
 	browserSync({
 		proxy: "test.dev",
@@ -45,7 +61,18 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-// Styles Task
+
+/*-----------------------------------------*\
+   STYLES TASK
+   - Catch errors via gulp-plumber
+   - Compile Sass
+   - Vendor prefix
+   - Output unminified CSS for debugging
+   - Rename
+	 - Minify
+	 - Output minified CSS
+\*-----------------------------------------*/
+
 gulp.task('styles', function () {
 	return gulp.src(paths.scss)
 		.pipe( $.plumber({errorHandler: onError}) )
@@ -58,7 +85,12 @@ gulp.task('styles', function () {
 		.pipe( $.size({title: 'Styles'}));
 });
 
-// Sass Linting
+
+/*-----------------------------------------*\
+    SASS LINTING
+    - Keep your code squeaky clean
+\*-----------------------------------------*/
+
 gulp.task('lint', function() {
 	return gulp.src(paths.scss)
 	.pipe( $.plumber({errorHandler: onError}) )
@@ -69,7 +101,18 @@ gulp.task('lint', function() {
 	}));
 });
 
-// Scripts Task
+
+/*-----------------------------------------*\
+   SCRIPTS TASK
+   - Catch errors via gulp-plumber
+   - Hint
+   - Concatenate assets/js into core.js
+   - Output unminified JS for debugging
+   - Minify
+	 - Rename
+	 - Output minified JS
+\*-----------------------------------------*/
+
 gulp.task('scripts',function(){
 	gulp.src(paths.js.src)
 	.pipe( $.plumber({errorHandler: onError}) )
@@ -83,7 +126,14 @@ gulp.task('scripts',function(){
 	.pipe( $.size({title: 'Scripts'}));
 });
 
-// Leave vendor scripts intact, uglify and copy to public folder.
+
+/*-----------------------------------------*\
+   VENDOR SCRIPTS TASK
+   - Leave vendor scripts intact
+   - Minify
+   - Output minified scripts
+\*-----------------------------------------*/
+
 gulp.task('vendorScripts',function(){
 	return gulp.src(paths.js.vendor)
 	.pipe($.uglify())
@@ -91,7 +141,13 @@ gulp.task('vendorScripts',function(){
 	.pipe($.size({title: 'Vendor Scripts'}));
 });
 
-// Images Task
+
+/*-----------------------------------------*\
+   IMAGE OPTIMISATION TASK
+   - Optimise only new images + SVGs
+   - Output
+\*-----------------------------------------*/
+
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
 		.pipe( $.cache( $.imagemin({
@@ -102,24 +158,44 @@ gulp.task('imgmin', function () {
 		.pipe( gulp.dest(basePaths.dest + '_img'));
 });
 
-// Manual Dev task - speedy
+
+/*-----------------------------------------*\
+   DEV TASK
+   - Speedy!
+\*-----------------------------------------*/
+
 gulp.task('dev', function() {
 	gulp.start('scripts', 'styles');
 });
 
-// Clean Output Directories
+
+/*-----------------------------------------*\
+   CLEAN OUTPUT DIRECTORIES
+\*-----------------------------------------*/
+
 gulp.task('clean', function() {
 	del([basePaths.dest + '_css', basePaths.dest + '_js'], { read: false })
 });
 
-// Manual Default task - does everything
+
+/*-----------------------------------------*\
+   MANUAL DEFAULT TASK
+   - Does everything
+   - Tasks in array run in parralel
+\*-----------------------------------------*/
+
 gulp.task('default', ['clean'], function(cb) {
 	runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin', cb);
 });
 
-// Watch and auto-reload browser(s).
+/*-----------------------------------------*\
+   WATCH
+   - Watch assets & public folder
+   - Auto-reload browsers
+\*-----------------------------------------*/
+
 gulp.task('watch', ['browser-sync'], function() {
-	gulp.watch('assets/scss/*.scss', ['styles', reload]);
-	gulp.watch('assets/js/*.js', ['scripts', reload]);
+	gulp.watch(paths.scss, ['styles', reload]);
+	gulp.watch(paths.js.src, ['scripts', reload]);
 	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
