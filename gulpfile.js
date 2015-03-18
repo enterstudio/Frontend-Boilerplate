@@ -278,7 +278,7 @@ gulp.task('default', ['clean'], function(cb) {
 
 gulp.task('watch', ['browser-sync'], function() {
   gulp.watch('gulpfile.js', ['default']);
-  gulp.watch(paths.scss, ['styles', reload]);
+  gulp.watch('assets/scss/**/*.scss', ['styles', reload]);
   gulp.watch(paths.js.src, ['scripts', reload]);
   gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });

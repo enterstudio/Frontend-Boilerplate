@@ -15,24 +15,28 @@ A starting point for Architect front-end projects.
 
 The standard build tool we’re now using is Gulp with the following plugins:
 
-- browser-sync
 - gulp-autoprefixer
-- gulp-bower
-- gulp-cache
+- gulp-cheerio
 - gulp-concat
-- gulp-imagemin
-- gulp-jshint
+- gulp-if
+- gulp-inject
 - gulp-load-plugins
 - gulp-minify-css
 - gulp-plumber
 - gulp-rename
-- gulp-sass (Node Sass)
-- gulp-scss-lint
+- gulp-ruby-sass
 - gulp-size
+- gulp-svg-sprite
 - gulp-uglify
-- gulp-svg-sprites
-- gulp-inject
-- run-sequence
+
+Additional plugins on dev:
+
+- browser-sync
+- gulp-cache
+- gulp-imagemin
+- gulp-notify
+- gulp-scss-lint
+- gulp-jshint
 
 In the `gulpfile`, plugins are loaded with `gulp-load-plugins` so should be used with the `$.` prefix.
 
@@ -40,7 +44,9 @@ Tasks:
 
 - `gulp dev` - task to run during development
 - `gulp lint` - task to lint Sass code (should be run often - code should pass lint tests before a PR is accepted)
-- `gulp` - task to run on before staging or production (on server)
+- `gulp` - runs all tasks (use in dev)
+- `gulp --production` - runs all production tasks (i.e excludes `devDependencies` )
+
 
 ### The SVG Icon System
 
@@ -52,7 +58,7 @@ The task also injects the symbols block into the head of your document inbetween
 
 ```
 <svg class="icon-twitter">
-	<use xlink:href="#icon-twitter"></use>
+	<use xlink:href="#twitter"></use>
 </svg>
 ```
 
@@ -67,6 +73,8 @@ Further reading:
 - [SVG vs. Icon Fonts](https://css-tricks.com/icon-fonts-vs-svg/)
 - [An Overview of SVG Sprite Creation Techniques](http://24ways.org/2014/an-overview-of-svg-sprite-creation-techniques/)
 - [Ten Reasons We Switched From An Icon Font to SVG](http://ianfeather.co.uk/ten-reasons-we-switched-from-an-icon-font-to-svg/)
+- [Gulp SVG Sprite](https://github.com/jkphl/gulp-svg-sprite)
+
 
 ## Structure
 

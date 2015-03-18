@@ -1,23 +1,24 @@
 // SVG ICONS - BASIC USAGE
 
-// <a href="/" class="icon-button">
-// <svg class="icon icon-twitter">
-// 	<use xlink:href="#icon-twitter"></use>
+// <a href="/" class="button">
+// <svg class="icon-twitter">
+// 	<use xlink:href="#twitter"></use>
 // </svg>
 // </a>
 
-.icon {
+[class^="icon-"] {
   width:32px;
   height:32px;
-	fill:#222;
+  fill:#444;
 }
 
-.icon-button {
+.button {
 	display:inline-block;
 	svg {
 		transition: fill 0.2s ease-in;
-		&:hover {
+		&:hover  {
 			fill: #FFC627;
 		}
 	}
 }
+
