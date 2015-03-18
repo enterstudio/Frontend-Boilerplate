@@ -19,7 +19,7 @@ var $ = require('gulp-load-plugins')(),
 	reload = browserSync.reload,
 
   // Environments
-  prod = !!(argv.prod), // true if --prod flag is used
+  production = !!(argv.production), // true if --prod flag is used
 
 	// Base Paths
 	basePaths = {
@@ -118,9 +118,9 @@ gulp.task('lint', function() {
 
 gulp.task('scripts',function(){
 	gulp.src(paths.js.src)
-	.pipe( $.if(!prod, $.plumber({errorHandler: onError}) ))
-	.pipe( $.if(!prod, $.jshint() ))
-	.pipe( $.if(!prod, $.jshint.reporter('default') ))
+	.pipe( $.if(!production, $.plumber({errorHandler: onError}) ))
+	.pipe( $.if(!production, $.jshint() ))
+	.pipe( $.if(!production, $.jshint.reporter('default') ))
 	.pipe( $.concat('core.js') )
 	.pipe( gulp.dest(basePaths.dest + '_js') )
 	.pipe( $.uglify() )
@@ -154,7 +154,7 @@ gulp.task('vendorScripts',function(){
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
 	  .pipe(stripAttrs())
-		.pipe( $.if(!prod, $.cache( $.imagemin({
+		.pipe( $.if(!production, $.cache( $.imagemin({
 				progressive: true,
 				svgoPlugins: [{removeViewBox: false}],
 				use: [ pngquant() ]
@@ -253,7 +253,10 @@ gulp.task('dev', function() {
 \*-----------------------------------------*/
 
 gulp.task('clean', function() {
-	del([basePaths.dest + '_*'], { read: false })
+  if( !production )
+  	del([basePaths.dest + '_*'], { read: false });
+  else
+    del([basePaths.dest + '_*', '!' + basePaths.dest + '_img' ], { read: false })
 });
 
 
@@ -274,10 +277,9 @@ gulp.task('default', ['clean'], function(cb) {
 \*-----------------------------------------*/
 
 gulp.task('watch', ['browser-sync'], function() {
-
   gulp.watch('gulpfile.js', ['default']);
-  gulp.watch('assets/scss/**/*.scss', ['styles', reload]);
-  gulp.watch('assets/js/**/*.js', ['scripts', reload]);
+  gulp.watch(paths.scss, ['styles', reload]);
+  gulp.watch(paths.js.src, ['scripts', reload]);
   gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
 
