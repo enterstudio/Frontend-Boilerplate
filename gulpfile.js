@@ -209,8 +209,6 @@ gulp.task('svgSymbols', function () {
 	        }
       },
         svg                     : {
-          // xmlDeclaration      : false,
-          // doctypeDeclaration  : false,
           dimensionAttributes : false
         }
       }
@@ -278,8 +276,6 @@ gulp.task('default', ['clean'], function(cb) {
 gulp.task('watch', ['browser-sync'], function() {
 
   gulp.watch('gulpfile.js', ['default']);
-  gulp.watch('bower.json', ['bower']);
-
   gulp.watch('assets/scss/**/*.scss', ['styles', reload]);
   gulp.watch('assets/js/**/*.js', ['scripts', reload]);
   gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
