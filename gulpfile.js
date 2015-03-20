@@ -27,9 +27,9 @@ var $ = require('gulp-load-plugins')(),
 		dest: 'public/'
 	},
 
-	// Folder Paths
+	// Assets Folder Paths
 	paths = {
-		scss: basePaths.src + 'scss',
+		scss: basePaths.src + 'scss/**/*.scss',
 		js: {
 			src: basePaths.src + 'js/src/**/*.js',
 			vendor: basePaths.src + 'js/vendor/*.js'
@@ -72,7 +72,7 @@ gulp.task('browser-sync', function() {
    - Catch errors via gulp-plumber
    - Compile Sass
    - Vendor prefix
-   - Ouput unminified CSS
+   - Output unminified CSS for debugging
    - Rename
 	 - Minify
 	 - Output minified CSS
@@ -110,10 +110,10 @@ gulp.task('lint', function() {
    - Catch errors via gulp-plumber
    - Hint
    - Concatenate assets/js into core.js
-   - Ouput uncompressed JS
-   - Compress
+   - Output unminified JS for debugging
+   - Minify
 	 - Rename
-	 - Output compressed JS
+	 - Output minified JS
 \*-----------------------------------------*/
 
 gulp.task('scripts',function(){
@@ -133,8 +133,8 @@ gulp.task('scripts',function(){
 /*-----------------------------------------*\
    VENDOR SCRIPTS TASK
    - Leave vendor scripts intact
-   - Compress
-   - Ouput compressed JS files
+   - Minify
+   - Output minified scripts
 \*-----------------------------------------*/
 
 gulp.task('vendorScripts',function(){
@@ -146,9 +146,9 @@ gulp.task('vendorScripts',function(){
 
 
 /*-----------------------------------------*\
-   IMAGE OPTIMISATION  TASK
-   - Optimise new images
-   - Ouput
+   IMAGE OPTIMISATION TASK
+   - Optimise only new images + SVGs
+   - Output
 \*-----------------------------------------*/
 
 gulp.task('imgmin', function () {
@@ -270,17 +270,16 @@ gulp.task('default', ['clean'], function(cb) {
 	runSequence('styles', ['scripts', 'vendorScripts', 'imgmin'], 'svg', cb);
 });
 
-
 /*-----------------------------------------*\
    WATCH
-   - Watch assets then auto-reload browsers
+   - Watch assets & public folder
+   - Auto-reload browsers
 \*-----------------------------------------*/
 
 gulp.task('watch', ['browser-sync'], function() {
-  gulp.watch('gulpfile.js', ['default']);
-  gulp.watch('assets/scss/**/*.scss', ['styles', reload]);
-  gulp.watch(paths.js.src, ['scripts', reload]);
-  gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
+	gulp.watch(paths.scss, ['styles', reload]);
+	gulp.watch(paths.js.src, ['scripts', reload]);
+	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
 
 /*-----------------------------------------*\
