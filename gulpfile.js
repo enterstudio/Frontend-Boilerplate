@@ -11,10 +11,15 @@ var $ = require('gulp-load-plugins')(),
 	gulp = require('gulp'),
 	del = require('del'),
 	fs = require('fs'),
+	lazypipe = require('lazypipe'),
+  argv = require('yargs').argv,
 	pngquant = require('imagemin-pngquant'),
 	runSequence = require('run-sequence'),
 	browserSync = require('browser-sync'),
 	reload = browserSync.reload,
+
+  // Environments
+  production = !!(argv.production), // true if --prod flag is used
 
 	// Base Paths
 	basePaths = {
@@ -29,7 +34,7 @@ var $ = require('gulp-load-plugins')(),
 			src: basePaths.src + 'js/src/**/*.js',
 			vendor: basePaths.src + 'js/vendor/*.js'
 		},
-		img: basePaths.src + 'img/**'
+		img: basePaths.src + 'img/**/*'
 	},
 
 
@@ -38,15 +43,15 @@ var $ = require('gulp-load-plugins')(),
     - Beep!
 \*-----------------------------------------*/
 
-	onError = function(err) {
-		$.notify.onError({
-			title: "Gulp",
-			subtitle: "Failure!",
-			message: "Error: <%= error.message %>",
-			sound: "Beep"
-		})(err);
-		this.emit('end');
-	};
+onError = function(err) {
+	$.notify.onError({
+		title: "Gulp",
+		subtitle: "Failure!",
+		message: "Error: <%= error.message %>",
+		sound: "Beep"
+	})(err);
+	this.emit('end');
+};
 
 
 /*-----------------------------------------*\
@@ -74,9 +79,8 @@ gulp.task('browser-sync', function() {
 \*-----------------------------------------*/
 
 gulp.task('styles', function () {
-	return gulp.src(paths.scss)
+	return $.rubySass( paths.scss, { style: 'expanded'})
 		.pipe( $.plumber({errorHandler: onError}) )
-		.pipe( $.sass({ style: 'expanded', }) )
 		.pipe( $.autoprefixer('last 2 version') )
 		.pipe( gulp.dest(basePaths.dest + '_css') )
 		.pipe( $.rename({ suffix: '.min' }) )
@@ -84,7 +88,6 @@ gulp.task('styles', function () {
 		.pipe( gulp.dest(basePaths.dest + '_css') )
 		.pipe( $.size({title: 'Styles'}));
 });
-
 
 /*-----------------------------------------*\
     SASS LINTING
@@ -115,9 +118,9 @@ gulp.task('lint', function() {
 
 gulp.task('scripts',function(){
 	gulp.src(paths.js.src)
-	.pipe( $.plumber({errorHandler: onError}) )
-	.pipe( $.jshint() )
-	.pipe( $.jshint.reporter('default') )
+	.pipe( $.if(!production, $.plumber({errorHandler: onError}) ))
+	.pipe( $.if(!production, $.jshint() ))
+	.pipe( $.if(!production, $.jshint.reporter('default') ))
 	.pipe( $.concat('core.js') )
 	.pipe( gulp.dest(basePaths.dest + '_js') )
 	.pipe( $.uglify() )
@@ -150,12 +153,88 @@ gulp.task('vendorScripts',function(){
 
 gulp.task('imgmin', function () {
 	return gulp.src(paths.img)
-		.pipe( $.cache( $.imagemin({
+	  .pipe(stripAttrs())
+		.pipe( $.if(!production, $.cache( $.imagemin({
 				progressive: true,
 				svgoPlugins: [{removeViewBox: false}],
 				use: [ pngquant() ]
-			})))
+			}))))
 		.pipe( gulp.dest(basePaths.dest + '_img'));
+});
+
+
+/*-----------------------------------------*\
+   SVG ICONS TASKS
+   - Config
+   - Create Symbol Sprites
+   - Create and add Symbol ID (id="icon-example")
+   - Create icon library preview page
+   - Output compiled icon library
+   - Inject into page
+
+   NB: Imgmin optimises all SVGs, then
+   outputs them to the _img folder.
+   So we have the icon library and the
+   individual SVGs at ourt disposal.
+\*-----------------------------------------*/
+
+var svgPaths = {
+  images: {
+    src: basePaths.src + 'img/svg',
+    dest: '_img'
+  },
+  sprite: {
+    src: basePaths.src + 'img/svg/*.svg',
+    svgSymbols: '_img/svg/icons/icons.svg',
+  }
+};
+
+// SVG Symbols Task
+// Create SVG Symbols for icons.
+gulp.task('svgSymbols', function () {
+  return gulp.src(svgPaths.sprite.src)
+    .pipe(stripAttrs())
+    .pipe($.svgSprite(
+      {
+        mode        : {
+	        symbol      : {
+	        prefix      : ".icon-%s",
+	        dimensions  : "%s",
+	        sprite      : "svg/icons/icons.svg",
+	        dest        : svgPaths.images.dest,
+	        inline 			: true,
+	        "example": {
+	          "dest": "svg/icons/icons-preview.html"
+	          }
+	        }
+      },
+        svg                     : {
+          dimensionAttributes : false
+        }
+      }
+    ))
+    .pipe(gulp.dest(basePaths.dest))
+    .pipe($.size({title: 'SVG Symbols'}));
+  });
+
+// SVG Document Injection
+// Inject SVG <symbol> block just after opening <body> tag.
+gulp.task('inject', function () {
+  var symbols = gulp.src(basePaths.dest + svgPaths.sprite.svgSymbols);
+
+  function fileContents (filePath, file) {
+    return file.contents.toString();
+  }
+
+  return gulp.src('./public/index.php')
+    .pipe($.inject(symbols, { transform: fileContents }))
+    .pipe(gulp.dest('./public'));
+});
+
+
+// Run all SVG tasks
+gulp.task('svg', function(cb) {
+  runSequence('svgSymbols', 'inject', cb);
 });
 
 
@@ -165,7 +244,7 @@ gulp.task('imgmin', function () {
 \*-----------------------------------------*/
 
 gulp.task('dev', function() {
-	gulp.start('scripts', 'styles');
+    gulp.start('scripts', 'styles');
 });
 
 
@@ -174,7 +253,10 @@ gulp.task('dev', function() {
 \*-----------------------------------------*/
 
 gulp.task('clean', function() {
-	del([basePaths.dest + '_css', basePaths.dest + '_js'], { read: false })
+  if( !production )
+  	del([basePaths.dest + '_*'], { read: false });
+  else
+    del([basePaths.dest + '_*', '!' + basePaths.dest + '_img' ], { read: false })
 });
 
 
@@ -185,7 +267,7 @@ gulp.task('clean', function() {
 \*-----------------------------------------*/
 
 gulp.task('default', ['clean'], function(cb) {
-	runSequence('styles', ['scripts', 'vendorScripts'], 'imgmin', cb);
+	runSequence('styles', ['scripts', 'vendorScripts', 'imgmin'], 'svg', cb);
 });
 
 /*-----------------------------------------*\
@@ -199,3 +281,20 @@ gulp.task('watch', ['browser-sync'], function() {
 	gulp.watch(paths.js.src, ['scripts', reload]);
 	gulp.watch([basePaths.dest + '*.html', basePaths.dest + '*.php'], reload);
 });
+
+/*-----------------------------------------*\
+   CUSTOM PIPES
+   - Any pipes used more than once
+\*-----------------------------------------*/
+
+// Strips attributes from SVGs
+var stripAttrs = lazypipe()
+  .pipe(
+    $.cheerio,
+    {
+      run: function ($) {
+        $('[fill]').removeAttr('fill');
+      },
+      parserOptions: { xmlMode: true }
+    }
+  );
