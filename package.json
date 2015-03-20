@@ -3,25 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "browser-sync": "^2.1.6",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.1.0",
-    "gulp-bower": "0.0.10",
-    "gulp-cache": "^0.2.8",
+    "gulp-cheerio": "^0.6.2",
     "gulp-concat": "^2.5.0",
-    "gulp-imagemin": "^2.2.1",
-    "gulp-jshint": "^1.9.2",
+    "gulp-if": "^1.2.5",
+    "gulp-inject": "^1.2.0",
     "gulp-load-plugins": "^0.8.0",
     "gulp-minify-css": "^0.4.5",
-    "gulp-notify": "^2.2.0",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.0",
-    "gulp-sass": "^1.3.3",
-    "gulp-scss-lint": "^0.1.7",
+    "gulp-ruby-sass": "*",
     "gulp-size": "^1.2.0",
+    "gulp-svg-sprite": "*",
     "gulp-uglify": "^1.1.0",
+    "lazypipe": "*",
+    "run-sequence": "^1.0.2",
+    "yargs": "^3.5.4"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.1.6",
+    "gulp-cache": "^0.2.8",
+    "gulp-imagemin": "^2.2.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-scss-lint": "^0.1.7",
     "imagemin-pngquant": "^4.0.0",
-    "run-sequence": "^1.0.2"
+    "gulp-jshint": "^1.9.2"
   }
 }
