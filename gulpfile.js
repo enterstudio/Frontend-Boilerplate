@@ -79,8 +79,9 @@ gulp.task('browser-sync', function() {
 \*-----------------------------------------*/
 
 gulp.task('styles', function () {
-	return $.rubySass( paths.scss, { style: 'expanded'})
+  return gulp.src(paths.scss)
 		.pipe( $.plumber({errorHandler: onError}) )
+    .pipe($.sass({ style: 'expanded', }))
 		.pipe( $.autoprefixer('last 2 version') )
 		.pipe( gulp.dest(basePaths.dest + '_css') )
 		.pipe( $.rename({ suffix: '.min' }) )
