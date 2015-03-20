@@ -1,10 +1,8 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-
 // Normalize
 @import "base/normalize";
+
+// Foundations
+@import "base/icons";
 
 // Settings and mixins
 @import "settings/font-face";
@@ -17,7 +15,6 @@
 @import "tools/media-queries"; // Stylistic mixins (buttons, arrows etc)
 
 @import "patterns"; // Sass mixins for breakpoints as well as clearfix and hide-text mixins
-
 
 // Grid - CSS Wizardry grids
 // @import "tools/grid"; // Use if required
