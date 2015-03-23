@@ -179,12 +179,12 @@ gulp.task('imgmin', function () {
 
 var svgPaths = {
   images: {
-    src: basePaths.src + 'svg',
-    dest: 'images'
+    src: basePaths.src + 'img/svg',
+    dest: '_img'
   },
   sprite: {
     src: basePaths.src + 'img/svg/*.svg',
-    svgSymbols: 'svg/icons.svg'
+    svgSymbols: '_img/svg/icons/icons.svg',
   }
 };
 
@@ -192,27 +192,29 @@ var svgPaths = {
 // Create SVG Symbols for icons.
 gulp.task('svgSymbols', function () {
   return gulp.src(svgPaths.sprite.src)
-  .pipe( stripAttrs() )
-  .pipe( $.svgSprite({
-    mode : {
-        symbol     : {
-        prefix     : ".icon-%s",
-        dimensions : "%s",
-        sprite     : "svg/icons/icons.svg",
-        dest       : svgPaths.images.dest,
-        inline     : true,
-        "example"  : {
-          "dest": "icons-preview.html"
+    .pipe(stripAttrs())
+    .pipe($.svgSprite(
+      {
+        mode        : {
+          symbol      : {
+          prefix      : ".icon-%s",
+          dimensions  : "%s",
+          sprite      : "svg/icons/icons.svg",
+          dest        : svgPaths.images.dest,
+          inline      : true,
+          "example": {
+            "dest": "svg/icons/icons-preview.html"
+            }
+          }
+      },
+        svg                     : {
+          dimensionAttributes : false
         }
       }
-    },
-    svg : {
-      dimensionAttributes : false
-    }
-  }))
-  .pipe(gulp.dest(basePaths.dest))
-  .pipe($.size({title: 'SVG Symbols'}));
-});
+    ))
+    .pipe(gulp.dest(basePaths.dest))
+    .pipe($.size({title: 'SVG Symbols'}));
+  });
 
 // SVG Document Injection
 // Inject SVG <symbol> block just after opening <body> tag.
@@ -223,9 +225,9 @@ gulp.task('inject', function () {
     return file.contents.toString();
   }
 
-  return gulp.src('./public/index.php')
+  return gulp.src( basePaths.dest + 'index.php')
     .pipe($.inject(symbols, { transform: fileContents }))
-    .pipe(gulp.dest('./public'));
+    .pipe(gulp.dest( basePaths.dest ));
 });
 
 
