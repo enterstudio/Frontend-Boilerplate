@@ -20,7 +20,8 @@
     "gulp-uglify": "^1.1.0",
     "lazypipe": "*",
     "run-sequence": "^1.0.2",
-    "yargs": "^3.5.4"
+    "yargs": "^3.5.4",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "browser-sync": "^2.1.6",
@@ -30,5 +31,10 @@
     "gulp-scss-lint": "^0.1.7",
     "imagemin-pngquant": "^4.0.0",
     "gulp-jshint": "^1.9.2"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
