@@ -1,0 +1,12 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - gulp-svg-sprite > svg-sprite > lodash:
+        patched: '2020-04-30T23:31:14.996Z'
+    - gulp-svg-sprite > svg-sprite > async > lodash:
+        patched: '2020-04-30T23:31:14.996Z'
+    - gulp-svg-sprite > svg-sprite > winston > async > lodash:
+        patched: '2020-04-30T23:31:14.996Z'
