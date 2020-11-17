@@ -20,7 +20,7 @@
     "gulp-uglify": "^1.1.0",
     "lazypipe": "*",
     "run-sequence": "^1.0.2",
-    "yargs": "^3.5.4"
+    "yargs": "^16.0.0"
   },
   "devDependencies": {
     "browser-sync": "^2.1.6",
