@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "del": "^1.1.1",
-    "gulp": "^3.8.11",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^2.1.0",
     "gulp-cheerio": "^0.6.2",
     "gulp-concat": "^2.5.0",
